@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  page:
+    image: timer
+    volumes:
+     - /home/jplr/Desktop/timer/:/app
+    ports:
+      - "80:5000"
+    networks:
+      - back-tier
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports: 
+      - "6379:6379"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  back-tier:

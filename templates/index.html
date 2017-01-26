@@ -1,0 +1,71 @@
+{% block head %}
+<tilte></title>
+<body style="background-color:lightgrey;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
+{% block page_content %}
+<audio id="over_music">
+    <source src="{{ url_for('static', filename='beepbeep.mp3') }}">
+</audio>
+
+    &nbsp;&nbsp;
+    <a class="workButton" href="/pomodoro">25 Minutes</a>
+    <a class="pomodoro" href="/rest">8 Minutes</a>
+    <a class="restButton" href="/ongoing" >Ongoing</a>
+    <a class="helpButton" id="help-btn">?</a>
+
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert-info">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    <div class="usage" id="help-info">
+            Left button starts a pomodoro (25 minute work period).
+            Right button starts a 8 minute rest period.
+        </p>
+    </div>
+</div>
+
+<div>
+    {#% if True %}yay{% endif %#}
+</div>
+
+<div class="timer">
+    <p id="time"></p>
+</div>
+
+<div class="quote">
+    <p id="quote"></p>
+	<i id="author"></i>
+</div>
+
+<div class="footer">
+    <form method="POST" action="{{ url_for('custom') }}" style="display:inline">
+        <input name="time" class="time-input" placeholder="time wanted">
+        <input type="submit" class="startButton" value="START">
+    </form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+<script>
+  var Minutes = {{ num }};
+</script>
+
+<script type="text/javascript">
+    function parseQuote(response)
+    {
+        document.getElementById("quote").innerHTML = response.quoteText;
+        document.getElementById("author").innerHTML = response.quoteAuthor;
+    }
+</script>
+
+<script type="text/javascript" src="http://api.forismatic.com/api/1.0/?method=getQuote&amp;format=jsonp&amp;lang=en&amp;jsonp=parseQuote" async></script>
+
+{% endblock %}
