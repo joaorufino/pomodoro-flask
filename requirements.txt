@@ -1,6 +1,6 @@
 Flask==0.11.1
 Jinja2==2.8
-Werkzeug==0.11.11
+Werkzeug==0.15.5
 gunicorn==18.0
 gevent
 Redis
